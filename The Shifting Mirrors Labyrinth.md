@@ -59,6 +59,7 @@ ESCAPED
 ### Direction Mapping
 
 ```cpp
+#include <set>
 // Mapping mirror direction to movement (dx, dy)
 const int dx[] = {-1, 1, 0, 0}; // U, D, L, R
 const int dy[] = {0, 0, -1, 1}; 
