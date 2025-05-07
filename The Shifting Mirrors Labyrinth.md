@@ -59,30 +59,34 @@ ESCAPED
 ### Direction Mapping
 
 ```cpp
+#include <set>
+// Mapping mirror direction to movement (dx, dy)
 const int dx[] = {-1, 1, 0, 0}; // U, D, L, R
-const int dy[] = {0, 0, -1, 1};
-```
+const int dy[] = {0, 0, -1, 1}; 
+const char dir[] = {'U', 'D', 'L', 'R'}; // Corresponding directions
 
-### Simulation Function
-
-```cpp
+// Function to check if laser escapes or is trapped
 void user_logic(int N, int M, vector<vector<char>> &grid, int Q, vector<pair<int, int>> &queries, vector<string> &results) {
     for (int i = 0; i < Q; i++) {
         int x = queries[i].first, y = queries[i].second;
         set<pair<int, int>> visited;
 
         while (true) {
+            // If out of bounds, laser escapes
             if (x < 0 || x >= N || y < 0 || y >= M) {
                 results[i] = "ESCAPED";
                 break;
             }
 
+            // If revisiting a cell, laser is trapped
             if (visited.count({x, y})) {
                 results[i] = "TRAPPED";
                 break;
             }
 
             visited.insert({x, y});
+
+            // Determine movement direction
             char d = grid[x][y];
             int moveIdx = (d == 'U' ? 0 : d == 'D' ? 1 : d == 'L' ? 2 : 3);
             x += dx[moveIdx];
